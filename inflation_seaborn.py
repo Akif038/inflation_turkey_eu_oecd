@@ -13,6 +13,7 @@ import dataframe_image as dfi
 inflation = pd.DataFrame(pd.read_csv("C:/Users/Mehmet Akif/OneDrive/Masaüstü/Excel Files/inflation.csv"))
 
 def get_data():
+    #getting an outlook from the DataFrame. 
     data2 = inflation.iloc[:,0:8]
     smp = data2.sample(n=20)
     smp_t = smp.style.background_gradient() #adding a gradient based on values in cell
@@ -22,6 +23,7 @@ c_inf = inflation.groupby("SUBJECT").get_group("TOT")
 f_inf = inflation.groupby("SUBJECT").get_group("FOOD")
 
 def turk_oecd():
+    #consumer inflation comparison between Turkey and OECD Countries.
     turk,oecde = c_inf[c_inf["LOCATION"] == "TUR"], c_inf[c_inf["LOCATION"] == "OECDE"]
     sns.set_theme(style="darkgrid")
     sns.lineplot(x="TIME",y="Value",data=turk,err_style="bars")
@@ -35,7 +37,8 @@ def turk_oecd():
     plt.show()
 
 def similar_turk():
-    turk,bra = c_inf[c_inf["LOCATION"] == "TUR"], c_inf[c_inf["LOCATION"] == "OECDE"]
+    #consumer inflation comparison between Turkey and Brazil, a similar country in terms of economic conditions.
+    turk,bra = c_inf[c_inf["LOCATION"] == "TUR"], c_inf[c_inf["LOCATION"] == "BRA"]
     sns.set_theme(style="darkgrid")
     sns.lineplot(x="TIME",y="Value",data=turk,err_style="bars")
     sns.lineplot(x="TIME",y="Value",data=bra,err_style="bars")
@@ -48,6 +51,7 @@ def similar_turk():
     plt.show()
 
 def turk_oecd_food():
+    #food inflation comparison between Turkey and OECD Countries.
     turk,oecde = f_inf[f_inf["LOCATION"] == "TUR"], f_inf[f_inf["LOCATION"] == "OECDE"]
     sns.set_theme(style="darkgrid")
     sns.set_theme(style="darkgrid")
@@ -63,6 +67,7 @@ def turk_oecd_food():
 
 
 def turk_eu():
+    #consumer inflation comparison between Turkey and EU Countries.
     turk,eu = c_inf[c_inf["LOCATION"] == "TUR"], c_inf[c_inf["LOCATION"] == "EU27_2020"]
     sns.set_theme(style="darkgrid")
     sns.set_theme(style="darkgrid")
@@ -77,6 +82,7 @@ def turk_eu():
     plt.show()
 
 def scatter():
+    #median inflation comparison of sample 20 countries. make sure that Turkey is in it.
     a = c_inf.groupby("LOCATION")["Value"].median()
     t = pd.DataFrame(a)
     k = t.sample(n=20)
